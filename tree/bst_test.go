@@ -163,6 +163,47 @@ func TestBSTChecker(t *testing.T) {
 
 		So(IsBST(root), ShouldBeFalse)
 	})
+	Convey("Failure - right1 is greater than root", t, func() {
+		/*
+		      10
+		    /     |
+		  0        25
+		/  |       /
+	   -1	21    16  32
+		 */
+		root := &Node{
+			value: 10,
+		}
+		left := &Node{
+			value: 0,
+		}
+		right := &Node{
+			value: 25,
+		}
+		root.left = left
+		root.right = right
+
+		//level 2
+		left1 := &Node{
+			value: -1,
+		}
+		right1 := &Node{
+			value: 21,
+		}
+		left.left = left1
+		left.right = right1
+
+		left2 := &Node{
+			value: 16,
+		}
+		right2 := &Node{
+			value: 32,
+		}
+		right.left = left2
+		right.right = right2
+
+		So(IsBST(root), ShouldBeFalse)
+	})
 }
 
 func TestGetSecondMax(t *testing.T) {

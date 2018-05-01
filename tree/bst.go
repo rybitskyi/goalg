@@ -12,26 +12,6 @@ type Node struct {
 }
 
 /*
-Write a method to check that a binary tree is a valid binary search tree.
- */
-
-//func IsBST(node *Node) bool {
-//	if node.left != nil {
-//		if node.left.value > node.value {
-//			return false
-//		}
-//		return IsBST(node.left)
-//	}
-//	if node.right != nil {
-//		if node.right.value < node.value {
-//			return false
-//		}
-//		return IsBST(node.right)
-//	}
-//	return true
-//}
-
-/*
 Inorder iterative tree traversal
 https://www.geeksforgeeks.org/inorder-tree-traversal-without-recursion-and-without-stack/
  */
@@ -73,27 +53,20 @@ func (root *Node) SecondMax() int {
 	}
 }
 
+/*
+A method that check that a binary tree is a valid binary search tree.
+ */
 func IsBST(root *Node) bool {
+	return isBSTCheck(root, -10000000, 10000000)
+}
 
-	node := root
-	//for {
-	//	//if node.left != nil {
-	//	//	//node.
-	//	//}
-	//	return false
-	//}
-
-	if node.left != nil {
-		if node.left.value > node.value {
-			return false
-		}
-		return IsBST(node.left)
+func isBSTCheck(node *Node, lowerBound int, upperBound int) bool {
+	if node == nil {
+		return true
 	}
-	if node.right != nil {
-		if node.right.value < node.value {
-			return false
-		}
-		return IsBST(node.right)
+	if node.value < lowerBound || node.value > upperBound {
+		return false
 	}
-	return true
+	return isBSTCheck(node.left, lowerBound, node.value) &&
+		isBSTCheck(node.right, node.value, upperBound)
 }
